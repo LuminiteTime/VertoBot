@@ -1,5 +1,5 @@
 from aiogram.filters.state import State, StatesGroup
 
 
-class FMSModes(StatesGroup):
+class FSMModes(StatesGroup):
     pdf_start = State()

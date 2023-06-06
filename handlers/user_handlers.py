@@ -11,7 +11,7 @@ from aiogram.types import CallbackQuery
 from aiogram.fsm.context import FSMContext
 from aiogram.fsm.state import default_state
 
-from bot_fms import FMSModes
+from bot_fsm import FSMModes
 
 router: Router = Router()
 
@@ -36,13 +36,13 @@ async def process_feedback_command(message: Message):
 @router.callback_query(Text(text='pdf_mode'), StateFilter(default_state))
 async def activate_pdf_mode(callback: CallbackQuery, state: FSMContext):
     await callback.message.delete()
-    await state.set_state(FMSModes.pdf_start)
+    await state.set_state(FSMModes.pdf_start)
     await callback.message.answer(text=LEXICON_RU['start_pdf_mode'],
                                 reply_markup=choose_file_mode_kb(1, **PDF_MODES_BTNS))
     await callback.answer()
 
 
-@router.callback_query(StateFilter(FMSModes.pdf_start), Text(text=PDF_MODES_BTNS.values()))
+@router.callback_query(StateFilter(FSMModes.pdf_start), Text(text=PDF_MODES_BTNS.values()))
 async def show_pdf_commands(callback: CallbackQuery, state: FSMContext):
     await callback.message.answer(text='Запустил PDF режим')
     await callback.answer()
